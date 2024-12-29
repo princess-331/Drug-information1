@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medication Information</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .search-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px rgba(52,152,219,0.3);
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .info-point {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-point:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medication Information</h1>
+        
+        <div class="search-section">
+            <input type="text" id="drugInput" placeholder="Enter medication name...">
+            <button onclick="searchDrug()">Search</button>
+        </div>
+
+        <div class="result-section" id="resultSection"></div>
+    </div>
+
+    <script>
+        // Sample medication database
+        const medicationDatabase = {
+            "paracetamol": {
+                scientificName: "N-acetyl-p-aminophenol (APAP)",
+                idealDose: "Adults: 500-1000mg every 4-6 hours (max 4g/day)",
+                pediatricDose: "10-15 mg/kg/dose every 4-6 hours",
+                dosageForm: "Tablets: 500mg, 650mg; Syrup: 120mg/5ml, 250mg/5ml",
+                sideEffects: "Liver damage (in overdose), mild nausea, rare allergic reactions",
+                antidote: "N-acetylcysteine (NAC) for overdose",
+                usage: "Pain relief, fever reduction"
+            },
+            "ibuprofen": {
+                scientificName: "2-(4-isobutylphenyl)propionic acid",
+                idealDose: "Adults: 200-400mg every 4-6 hours (max 2.4g/day)",
+                pediatricDose: "5-10 mg/kg/dose every 6-8 hours",
+                dosageForm: "Tablets: 200mg, 400mg, 600mg; Suspension: 100mg/5ml",
+                sideEffects: "Gastric irritation, increased bleeding risk, kidney problems",
+                antidote: "No specific antidote",
+                usage: "Pain relief, inflammation, fever reduction"
+            }
+        };
+
+        function searchDrug() {
+            const drugName = document.getElementById('drugInput').value.toLowerCase();
+            const resultSection = document.getElementById('resultSection');
+            
+            if (medicationDatabase[drugName]) {
+                const drug = medicationDatabase[drugName];
+                resultSection.innerHTML = `
+                    <div class="info-point">
+                        <div class="info-label">Scientific Name:</div>
+                        ${drug.scientificName}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Ideal Dose:</div>
+                        ${drug.idealDose}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Pediatric Dose:</div>
+                        ${drug.pediatricDose}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Dosage Form:</div>
+                        ${drug.dosageForm}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Side Effects:</div>
+                        ${drug.sideEffects}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Antidote:</div>
+                        ${drug.antidote}
+                    </div>
+                    <div class="info-point">
+                        <div class="info-label">Usage:</div>
+                        ${drug.usage}
+                    </div>
+                `;
+            } else {
+                resultSection.innerHTML = `
+                    <div class="error-message">
+                        Medication not found in database. Please try another medication.
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
